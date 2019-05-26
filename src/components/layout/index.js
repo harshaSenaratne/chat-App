@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import io from 'socket.io-client';
 import {USER_CONNECTED,LOGOUT} from '../../Events'
-const socketURL ='http://192.168.1.102:4000/'
+import LoginForm from '../LoginForm'
+const socketURL ='http://192.168.1.101:4000/'
 export default class index extends Component {
 
     constructor(props) {
@@ -39,14 +40,15 @@ export default class index extends Component {
     logout=()=>{
       const {socket}=this.state
       socket.emit(LOGOUT)
-      this.setState({user})
+      this.setState({user:null})
       }
     
   render() {
       const {title} = this.props
+      const {socket} =this.state
     return (
       <div className="container">
-         {title}
+         <LoginForm socket={socket} setUser={this.setUser}/>
       </div>
     )
   }
